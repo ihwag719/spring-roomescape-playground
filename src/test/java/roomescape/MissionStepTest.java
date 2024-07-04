@@ -2,6 +2,7 @@ package roomescape;
 
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
@@ -15,6 +16,7 @@ import static org.hamcrest.Matchers.is;
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 public class MissionStepTest {
 
+    @DisplayName("루트 경로 확인")
     @Test
     void 일단계() {
         RestAssured.given().log().all()
@@ -23,6 +25,7 @@ public class MissionStepTest {
                 .statusCode(200);
     }
 
+    @DisplayName("예약 조회 확인")
     @Test
     void 이단계() {
         RestAssured.given().log().all()
@@ -34,9 +37,10 @@ public class MissionStepTest {
                 .when().get("/reservations")
                 .then().log().all()
                 .statusCode(200)
-                .body("size()", is(3)); // 아직 생성 요청이 없으니 Controller에서 임의로 넣어준 Reservation 갯수 만큼 검증하거나 0개임을 확인하세요.
+                .body("size()", is(0)); // 아직 생성 요청이 없으니 Controller에서 임의로 넣어준 Reservation 갯수 만큼 검증하거나 0개임을 확인하세요.
     }
 
+    @DisplayName("예약 생성, 조회, 삭제 확인")
     @Test
     void 삼단계() {
         Map<String, String> params = new HashMap<>();
@@ -70,7 +74,7 @@ public class MissionStepTest {
                 .statusCode(200)
                 .body("size()", is(0));
     }
-
+    @DisplayName("예외 처리 확인")
     @Test
     void 사단계() {
         Map<String, String> params = new HashMap<>();

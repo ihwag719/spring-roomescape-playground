@@ -37,7 +37,7 @@ public class ReservationController {
     public ResponseEntity<Reservation> createReservation(@RequestBody Reservation reservation) {
         validateReservation(reservation);
 
-        Long id = (long) (reservations.size() + 1);
+        Long id = index.getAndIncrement();
         String name = reservation.getName();
         String date = reservation.getDate();
         String time = reservation.getTime();
@@ -53,7 +53,7 @@ public class ReservationController {
     public ResponseEntity<Void> deleteReservation(@PathVariable Long id) {
         boolean removed = reservations.removeIf(r -> r.getId() == id);
         if (!removed) {
-            throw new NotFoundReservationException("Reservation not found with id: " + id);
+            throw new NotFoundReservationException("예약을 찾을 수 없습니다: " + id);
         }
         return ResponseEntity.noContent().build();
     }
@@ -64,10 +64,14 @@ public class ReservationController {
     }
 
     private void validateReservation(Reservation reservation) {
-        if (reservation.getName() == null || reservation.getName().isEmpty() ||
-                reservation.getDate() == null || reservation.getDate().isEmpty() ||
-                reservation.getTime() == null || reservation.getTime().isEmpty()) {
-            throw new InvalidReservationException("예약 생성 시 필요한 인자가 비어 있습니다");
-        }
+        if (reservation.getName() == null || reservation.getName().isEmpty()) {
+                throw new InvalidReservationException("이름이 필요합니다.");
+            }
+        if (reservation.getDate() == null || reservation.getDate().isEmpty()) {
+                throw new InvalidReservationException("날짜가 필요합니다.");
+            }
+        if (reservation.getTime() == null || reservation.getTime().isEmpty()) {
+                throw new InvalidReservationException("시간이 필요합니다");
+            }
     }
 }
