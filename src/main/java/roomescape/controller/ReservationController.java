@@ -8,12 +8,10 @@ import roomescape.respository.ReservationRepository;
 
 import java.net.URI;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicLong;
 
 @RestController
 @RequestMapping("/reservations")
 public class ReservationController {
-    private AtomicLong index = new AtomicLong(1);
     private final ReservationRepository reservationRepository;
 
     public ReservationController(ReservationRepository reservationRepository) {
@@ -37,10 +35,7 @@ public class ReservationController {
     public ResponseEntity<Reservation> createReservation(@RequestBody Reservation reservation) {
         validateReservation(reservation);
 
-        Long id = index.getAndIncrement();
-
-        Reservation newReservation = new Reservation(id, reservation.getName(), reservation.getDate(), reservation.getTime());
-        reservationRepository.insert(newReservation);
+        Reservation newReservation = reservationRepository.insert(reservation);
 
         return ResponseEntity.created(URI.create("/reservations/" + newReservation.getId())).body(newReservation);
     }
