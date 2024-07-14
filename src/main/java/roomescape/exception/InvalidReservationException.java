@@ -1,6 +1,7 @@
 package roomescape.exception;
 
 public class InvalidReservationException extends RuntimeException{
+  
     private String fieldName;
 
     public InvalidReservationException(String fieldName, String message) {
