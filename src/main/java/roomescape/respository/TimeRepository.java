@@ -6,8 +6,6 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
-import roomescape.exception.NotFoundReservationException;
-import roomescape.model.Reservation;
 import roomescape.model.Time;
 
 import java.sql.PreparedStatement;
@@ -33,9 +31,13 @@ public class TimeRepository {
         return jdbcTemplate.query(sql, rowMapper);
     }
 
-    public Time findTimeById(Long id) {
-        String sql = "SELECT id, time FROM time where id = ?";
-            return jdbcTemplate.queryForObject(sql, rowMapper, id);
+    public Time findTimeByTimeValue(String timeValue) {
+        String sql = "SELECT id, time FROM time where time = ?";
+        try {
+            return jdbcTemplate.queryForObject(sql, rowMapper, timeValue);
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
 
     public Time insert(Time time) {
