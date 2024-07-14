@@ -1,21 +1,24 @@
-package roomescape.respository;
+package roomescape.dao;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
-import roomescape.model.Time;
+import roomescape.domain.Time;
 
 import java.sql.PreparedStatement;
 import java.util.List;
 
 @Repository
-public class TimeRepository {
+public class TimeDAO {
+
+    @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    public TimeRepository(JdbcTemplate jdbcTemplate) {
+    public TimeDAO(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
@@ -31,7 +34,7 @@ public class TimeRepository {
         return jdbcTemplate.query(sql, rowMapper);
     }
 
-    public Time findTimeByTimeValue(String timeValue) {
+    public Time findByTimeValue(String timeValue) {
         String sql = "SELECT id, time FROM time where time = ?";
         try {
             return jdbcTemplate.queryForObject(sql, rowMapper, timeValue);

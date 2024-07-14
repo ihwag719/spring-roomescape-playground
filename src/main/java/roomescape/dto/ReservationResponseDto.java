@@ -1,6 +1,6 @@
 package roomescape.dto;
 
-import roomescape.model.Time;
+import roomescape.domain.Time;
 
 public class ReservationResponseDto {
     private Long id;

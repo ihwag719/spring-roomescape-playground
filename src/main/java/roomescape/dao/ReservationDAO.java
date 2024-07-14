@@ -1,24 +1,25 @@
-package roomescape.respository;
+package roomescape.dao;
 
-import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import roomescape.exception.NotFoundReservationException;
-import roomescape.model.Reservation;
-import roomescape.model.Time;
+import roomescape.domain.Reservation;
+import roomescape.domain.Time;
 
 import java.sql.PreparedStatement;
 import java.util.List;
 
 @Repository
-public class ReservationRepository {
+public class ReservationDAO {
 
+    @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    public ReservationRepository(JdbcTemplate jdbcTemplate, TimeRepository timeRepository) {
+    public ReservationDAO(JdbcTemplate jdbcTemplate, TimeDAO timeDAO) {
         this.jdbcTemplate = jdbcTemplate;
     }
 

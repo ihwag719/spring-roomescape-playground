@@ -1,9 +1,10 @@
 package roomescape.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import roomescape.model.Time;
-import roomescape.respository.TimeRepository;
+import roomescape.domain.Time;
+import roomescape.service.TimeService;
 
 import java.net.URI;
 import java.util.List;
@@ -11,29 +12,27 @@ import java.util.List;
 @RestController
 @RequestMapping("/times")
 public class TimeController {
-    private final TimeRepository timeRepository;
 
-    public TimeController(TimeRepository timeRepository) {
-        this.timeRepository = timeRepository;
+    @Autowired
+    private final TimeService timeService;
+    public TimeController(TimeService timeService) {
+        this.timeService = timeService;
     }
 
     @GetMapping
-    @ResponseBody
     public List<Time> getTimes() {
-        return timeRepository.findAllTime();
+        return timeService.getAllTimes();
     }
 
     @PostMapping
-    @ResponseBody
     public ResponseEntity<Time> createTime(@RequestBody Time time) {
-        Time newTime = timeRepository.insert(time);
+        Time newTime = timeService.createTime(time);
         return ResponseEntity.created((URI.create("/times/" + newTime.getId()))).body(newTime);
     }
 
     @DeleteMapping("/{id}")
-    @ResponseBody
     public ResponseEntity<Void> deleteTime(@PathVariable Long id) {
-        timeRepository.delete(id);
+        timeService.deleteTime(id);
         return ResponseEntity.noContent().build();
     }
 }
