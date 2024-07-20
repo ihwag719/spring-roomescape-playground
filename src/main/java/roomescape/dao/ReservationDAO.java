@@ -16,9 +16,9 @@ import java.util.List;
 @Repository
 public class ReservationDAO {
 
-    @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    @Autowired
     public ReservationDAO(JdbcTemplate jdbcTemplate, TimeDAO timeDAO) {
         this.jdbcTemplate = jdbcTemplate;
     }
@@ -37,9 +37,10 @@ public class ReservationDAO {
     };
 
     public List<Reservation> findAllReservations() {
-        String sql = "SELECT r.id as reservation_id, r.name, r.date, t.id as time_id, t.time as time_value " +
-                        "FROM reservation as r " +
-                        "inner join time as t on r.time_id = t.id";
+        String sql = """
+                         SELECT r.id as reservation_id, r.name, r.date, t.id as time_id, t.time as time_value
+                         FROM reservation as r inner join time as t on r.time_id = t.id
+                         """;
         return jdbcTemplate.query(sql, rowMapper);
     }
 

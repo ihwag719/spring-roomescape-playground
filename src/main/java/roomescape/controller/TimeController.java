@@ -3,7 +3,8 @@ package roomescape.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import roomescape.domain.Time;
+import roomescape.dto.TimeRequestDto;
+import roomescape.dto.TimeResponseDto;
 import roomescape.service.TimeService;
 
 import java.net.URI;
@@ -13,21 +14,22 @@ import java.util.List;
 @RequestMapping("/times")
 public class TimeController {
 
-    @Autowired
     private final TimeService timeService;
+
+    @Autowired
     public TimeController(TimeService timeService) {
         this.timeService = timeService;
     }
 
     @GetMapping
-    public List<Time> getTimes() {
+    public List<TimeResponseDto> getTimes() {
         return timeService.getAllTimes();
     }
 
     @PostMapping
-    public ResponseEntity<Time> createTime(@RequestBody Time time) {
-        Time newTime = timeService.createTime(time);
-        return ResponseEntity.created((URI.create("/times/" + newTime.getId()))).body(newTime);
+    public ResponseEntity<TimeResponseDto> createTime(@RequestBody TimeRequestDto timeRequestDto) {
+        TimeResponseDto newTimeDto = timeService.createTime(timeRequestDto);
+        return ResponseEntity.created(URI.create("/times/" + newTimeDto.getId())).body(newTimeDto);
     }
 
     @DeleteMapping("/{id}")

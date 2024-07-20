@@ -15,9 +15,9 @@ import java.util.List;
 @Repository
 public class TimeDAO {
 
-    @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    @Autowired
     public TimeDAO(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }

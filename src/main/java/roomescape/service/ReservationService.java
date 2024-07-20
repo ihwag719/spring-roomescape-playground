@@ -16,12 +16,11 @@ import java.util.stream.Collectors;
 @Service
 public class ReservationService {
 
-    @Autowired
     private final ReservationDAO reservationDAO;
 
-    @Autowired
     private final TimeDAO timeDAO;
 
+    @Autowired
     public ReservationService(ReservationDAO reservationDAO, TimeDAO timeDAO) {
         this.reservationDAO = reservationDAO;
         this.timeDAO = timeDAO;

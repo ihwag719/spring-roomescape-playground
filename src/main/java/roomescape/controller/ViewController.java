@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/reservations")
-public class viewController {
+public class ViewController {
     @GetMapping("/reservationpage")
     public String reservationPage() {
         return "new-reservation";
