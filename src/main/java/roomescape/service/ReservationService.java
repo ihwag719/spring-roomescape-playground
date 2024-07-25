@@ -41,7 +41,7 @@ public class ReservationService {
             time = timeDAO.insert(new Time(null, requestDto.getTime()));
         }
 
-        Reservation reservation = new Reservation(null, requestDto.getName(), requestDto.getDate(), time);
+        Reservation reservation = new Reservation(requestDto.getName(), requestDto.getDate(), time);
         Reservation newReservation = reservationDAO.insert(reservation);
 
         return new ReservationResponseDto(newReservation.getId(), newReservation.getName(), newReservation.getDate(), newReservation.getTime());

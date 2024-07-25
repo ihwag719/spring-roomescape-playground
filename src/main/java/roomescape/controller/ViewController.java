@@ -11,4 +11,9 @@ public class ViewController {
     public String reservationPage() {
         return "new-reservation";
     }
+
+    @GetMapping("/timepage")
+    public String timeManagementPage() {
+        return "time";
+    }
 }
