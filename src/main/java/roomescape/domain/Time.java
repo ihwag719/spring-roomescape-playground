@@ -9,6 +9,10 @@ public class Time {
         this.time = time;
     }
 
+    public Time(String time) {
+        this.time = time;
+    }
+
     public Long getId() {
         return id;
     }

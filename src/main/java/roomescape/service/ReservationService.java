@@ -38,7 +38,7 @@ public class ReservationService {
 
         Time time = timeDAO.findByTimeValue(requestDto.getTime());
         if (time == null) {
-            time = timeDAO.insert(new Time(null, requestDto.getTime()));
+            time = timeDAO.insert(new Time(requestDto.getTime()));
         }
 
         Reservation reservation = new Reservation(requestDto.getName(), requestDto.getDate(), time);
